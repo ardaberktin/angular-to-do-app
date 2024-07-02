@@ -1,60 +1,80 @@
 .home {
-  min-height: 120vh;
-  height: auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
+  .home-widgets {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
 
-.home-widgets {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch; /* Ensure widgets have equal height */
-  justify-content: space-between;
-  gap: 20px;
-}
+    .totTaskWidget {
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      margin-top: 50px;
+      width: 100%;
 
-.totTaskWidget {
-  border: 2px solid white;
-  flex: 1; /* Make widgets take equal space */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Ensure content is evenly spaced */
-  overflow: auto; /* Make the content scrollable */
-}
+      overflow: auto;
 
-.widget-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 2px solid gray;
-  margin: 10px;
-  gap: 20px;
-}
+      .widget-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
 
-.task-num-title {
-  padding: 10px;
-  text-align: left;
-}
+        .task-num-title {
+          font-size: 18px;
+          font-weight: bold;
+          margin: 0;
+        }
 
-.material-symbols-outlined {
-  position: relative;
-  right: 0;
-  cursor: pointer;
-  background-color: gray;
-  color: white;
-  border-radius: 100%;
-}
+        .material-symbols-outlined {
+          cursor: pointer;
+          font-size: 24px;
+          color: #007bff; /* Adjust color as per your theme */
+        }
+      }
 
-.material-symbols-outlined:active {
-  transform: translateY(2px);
-}
+      .add-new-task {
+        margin-bottom: 20px;
 
-app-tasks {
-  // flex: 1 1 0; /* Allow tasks to share available space equally */
-  max-width: 100%; /* Prevent tasks from exceeding the container width */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        form {
+          display: grid;
+          gap: 10px;
+
+          label {
+            font-weight: bold;
+          }
+
+          input[type="text"],
+          textarea {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+          }
+
+          button[type="submit"] {
+            background-color: #007bff; /* Button color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+              background-color: #0056b3; /* Button hover color */
+            }
+          }
+        }
+      }
+    }
+
+    .completed {
+      max-width: 30vh;
+    }
+  }
 }

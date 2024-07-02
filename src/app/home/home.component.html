@@ -2,7 +2,7 @@
   <div class="home-widgets">
     <div class="totTaskWidget">
       <div class="widget-title">
-        <p class="task-num-title">Number of Tasks: {{ totalTaskNum }}</p>
+        <p class="task-num-title">Tasks: {{ totalTaskNum }}</p>
         <span class="material-symbols-outlined" (click)="toggleIsAddTask()">
           add
         </span>
@@ -32,11 +32,9 @@
       </div>
     </div>
 
-    <div class="totTaskWidget">
+    <div class="totTaskWidget completed">
       <div class="widget-title">
-        <p class="task-num-title">
-          Number of Completed Tasks: {{ completedTaskNum }}
-        </p>
+        <p class="task-num-title">Completed Tasks: {{ completedTaskNum }}</p>
       </div>
       <app-tasks
         *ngFor="let task of completedTasks"
