@@ -2,14 +2,33 @@
   <p>{{ message }}</p>
   <div class="home-widgets">
     <div class="totTaskWidget">
-      <mat-checkbox>Check me!</mat-checkbox>
-      <p class="task-num-title">Number of Tasks: {{ totalTaskNum }}</p>
+      <div class="widget-title">
+        <p class="task-num-title">Number of Tasks: {{ totalTaskNum }}</p>
+        <span class="material-symbols-outlined"> add </span>
+      </div>
+      <div *ngIf="isAddTask">
+        <p>hello</p>
+      </div>
       <div>
-        <app-tasks *ngFor="let task of tasks" [task]="task"></app-tasks>
+        <app-tasks
+          *ngFor="let task of unCompletedTasks"
+          [task]="task"
+          (completedChange)="onTaskCompletionChange($event)"
+        ></app-tasks>
       </div>
     </div>
+
     <div class="totTaskWidget">
-      <p class="task-num-title">Number of Tasks: {{ totalTaskNum }}</p>
+      <div class="widget-title">
+        <p class="task-num-title">
+          Number of Completed Tasks: {{ completedTaskNum }}
+        </p>
+      </div>
+      <app-tasks
+        *ngFor="let task of completedTasks"
+        [task]="task"
+        (completedChange)="onTaskCompletionChange($event)"
+      ></app-tasks>
     </div>
   </div>
 </div>

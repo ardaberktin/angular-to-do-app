@@ -6,9 +6,10 @@ export interface Tasks {
   totalPages: number;
 }
 
+// types.ts (or wherever your Task model is defined)
 export interface Task {
+  id: number; // Unique identifier
   name: string;
   body: string;
-  // image: string;
-  // rating: number;
+  completed: boolean;
 }

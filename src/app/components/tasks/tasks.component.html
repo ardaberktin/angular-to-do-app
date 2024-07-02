@@ -1,5 +1,12 @@
 <div class="task">
-  <mat-checkbox>Check me!</mat-checkbox>
-  <p class="task-name">{{ task.name }}</p>
-  <p>{{ task.body }}</p>
+  <div class="task-title">
+    <mat-checkbox
+      class="task-checkbox"
+      color="primary"
+      [checked]="task.completed"
+      (change)="toggleCompletion()"
+      >{{ task.name }}</mat-checkbox
+    >
+  </div>
+  <p class="task-body">{{ task.body }}</p>
 </div>

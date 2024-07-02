@@ -1,12 +1,30 @@
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
-
 .task {
   margin: 10px;
   padding: 10px;
   border: 1px solid gray;
+  // background-color: rgb(45, 43, 43);
+}
+
+.task-title {
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }
 
 .task-name {
   font-weight: bold;
   font-size: larger;
+}
+
+.task-body {
+  word-wrap: break-word;
+}
+
+.task-checkbox {
+  font-size: larger;
+  padding: 2px;
+  padding-right: 10px;
+
+  // background-color: rgba(215, 206, 206, 0.469);
+  border-radius: 7px;
 }

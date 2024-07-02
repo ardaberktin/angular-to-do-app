@@ -1,28 +1,60 @@
 .home {
-  height: 120vh;
+  min-height: 120vh;
+  height: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: flex-start;
   justify-content: flex-start;
 }
 
 .home-widgets {
+  width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch; /* Ensure widgets have equal height */
+  justify-content: space-between;
   gap: 20px;
 }
 
 .totTaskWidget {
-  width: 100%;
   border: 2px solid white;
+  flex: 1; /* Make widgets take equal space */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Ensure content is evenly spaced */
+  overflow: auto; /* Make the content scrollable */
+}
+
+.widget-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid gray;
+  margin: 10px;
+  gap: 20px;
 }
 
 .task-num-title {
   padding: 10px;
   text-align: left;
-  border-bottom: 2px solid gray;
-  margin: 10px;
+}
+
+.material-symbols-outlined {
+  position: relative;
+  right: 0;
+  cursor: pointer;
+  background-color: gray;
+  color: white;
+  border-radius: 100%;
+}
+
+.material-symbols-outlined:active {
+  transform: translateY(2px);
+}
+
+app-tasks {
+  flex: 1 1 0; /* Allow tasks to share available space equally */
+  max-width: 100%; /* Prevent tasks from exceeding the container width */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
