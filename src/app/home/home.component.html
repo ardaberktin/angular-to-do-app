@@ -2,6 +2,7 @@
   <p>{{ message }}</p>
   <div class="home-widgets">
     <div class="totTaskWidget">
+      <mat-checkbox>Check me!</mat-checkbox>
       <p class="task-num-title">Number of Tasks: {{ totalTaskNum }}</p>
       <div>
         <app-tasks *ngFor="let task of tasks" [task]="task"></app-tasks>

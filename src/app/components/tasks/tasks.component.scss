@@ -1,0 +1,12 @@
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+.task {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid gray;
+}
+
+.task-name {
+  font-weight: bold;
+  font-size: larger;
+}
