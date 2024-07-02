@@ -1,12 +1,18 @@
 <div class="task">
   <div class="task-title">
-    <mat-checkbox
-      class="task-checkbox"
-      color="primary"
-      [checked]="task.completed"
-      (change)="toggleCompletion()"
-      >{{ task.name }}</mat-checkbox
-    >
+    <div class="task-title-wrapper">
+      <mat-checkbox
+        class="task-checkbox"
+        color="primary"
+        [checked]="task.completed"
+        (change)="toggleCompletion()"
+        >{{ task.name }}</mat-checkbox
+      >
+
+      <span class="material-symbols-outlined" (click)="deleteThisTask()">
+        delete_forever
+      </span>
+    </div>
   </div>
   <p class="task-body">{{ task.body }}</p>
 </div>

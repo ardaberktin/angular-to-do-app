@@ -54,7 +54,7 @@
 }
 
 app-tasks {
-  flex: 1 1 0; /* Allow tasks to share available space equally */
+  // flex: 1 1 0; /* Allow tasks to share available space equally */
   max-width: 100%; /* Prevent tasks from exceeding the container width */
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }

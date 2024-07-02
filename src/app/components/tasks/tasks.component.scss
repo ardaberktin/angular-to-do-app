@@ -7,7 +7,7 @@
 
 .task-title {
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -27,4 +27,27 @@
 
   // background-color: rgba(215, 206, 206, 0.469);
   border-radius: 7px;
+}
+
+.material-symbols-outlined {
+  position: relative;
+  right: 0;
+  cursor: pointer;
+}
+
+.material-symbols-outlined:active {
+  transform: translateY(2px);
+}
+
+.task-title-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.task-checkbox {
+  margin-right: 10px; /* Adjust as needed */
+}
+
+.delete-icon {
+  margin-left: auto; /* This will push the delete icon to the right */
 }

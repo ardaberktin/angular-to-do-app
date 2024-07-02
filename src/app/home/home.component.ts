@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TasksComponent } from '../components/tasks/tasks.component';
 import { CommonModule } from '@angular/common';
 import { Task } from '../../types';
+import { TasksService } from '../services/tasks.service';
 
 @Component({
   selector: 'app-home',
@@ -11,122 +12,34 @@ import { Task } from '../../types';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  message: string = 'Widgets';
-  totalTaskNum: number = 10;
-  completedTaskNum: number = 0;
-  unCompletedTasksNum: number = 0;
-  isAddTask: boolean = false;
+  tasks: Task[] = [];
 
   completedTasks: Task[] = [];
   unCompletedTasks: Task[] = [];
 
-  tasks: Task[] = [
-    {
-      name: '',
-      body: '',
-      completed: false,
-      id: 0,
-    },
-    {
-      name: '',
-      body: '',
-      completed: false,
-      id: 1,
-    },
-    {
-      name: '',
-      body: '',
-      completed: false,
-      id: 2,
-    },
-    {
-      name: '',
-      body: '',
-      completed: false,
-      id: 3,
-    },
-    {
-      name: '',
-      body: '',
-      completed: false,
-      id: 4,
-    },
-  ];
+  totalTaskNum: number = 0;
+  completedTaskNum: number = 0;
+  unCompletedTasksNum: number = 0;
 
-  getTasks() {
-    this.tasks[0].name = 'Deneme';
-    this.tasks[0].body =
-      'deneme124325412541deneme124325412541deneme124325412541deneme124325412541deneme124325412541deneme124325412541deneme124325412541deneme124325412541';
+  isAddTask: boolean = false;
 
-    this.tasks[1].name = 'Example Task 1';
-    this.tasks[1].body = 'Description for Example Task 1';
+  constructor(private tasksService: TasksService) {}
 
-    this.tasks[2].name = 'Example Task 2';
-    this.tasks[2].body = 'Description for Example Task 2';
-
-    this.tasks[3].name = 'Example Task 3';
-    this.tasks[3].body = 'Description for Example Task 3';
-
-    this.tasks[4].name = 'Example Task 4';
-    this.tasks[4].body = 'Description for Example Task 4';
+  ngOnInit(): void {
+    this.loadTasks();
   }
 
-  saveTasks(tasks: Task[]) {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+  loadTasks(): void {
+    this.tasks = this.tasksService.getTasksFromLocalStorage();
+    this.updateTaskStats();
   }
 
-  loadTasks(): Task[] {
-    const tasks = localStorage.getItem('tasks');
-    return tasks ? JSON.parse(tasks) : [];
-  }
-
-  getTotalTasks() {
+  updateTaskStats(): void {
     this.totalTaskNum = this.tasks.length;
-  }
-
-  getCompletedTaskNum() {
-    this.completedTaskNum = 0;
-    this.tasks.forEach((task) => {
-      if (task.completed) {
-        this.completedTaskNum++;
-      }
-    });
-  }
-
-  getCompletedTasks() {
     this.completedTasks = this.tasks.filter((task) => task.completed);
-    this.completedTaskNum = this.completedTasks.length;
-  }
-
-  getUnCompletedTasks() {
     this.unCompletedTasks = this.tasks.filter((task) => !task.completed);
+    this.completedTaskNum = this.completedTasks.length;
     this.unCompletedTasksNum = this.unCompletedTasks.length;
-  }
-
-  addUnCompletedTasks(task: Task) {
-    this.unCompletedTasks.push(task);
-    this.unCompletedTasksNum++;
-  }
-
-  deleteUnCompletedTasks(task: Task) {
-    const index = this.unCompletedTasks.findIndex((t) => t.id === task.id);
-    if (index !== -1) {
-      this.unCompletedTasks.splice(index, 1);
-      this.unCompletedTasksNum--;
-    }
-  }
-
-  addCompletedTasks(task: Task) {
-    this.completedTasks.push(task);
-    this.completedTaskNum++;
-  }
-
-  deleteCompletedTasks(task: Task) {
-    const index = this.completedTasks.findIndex((t) => t.id === task.id);
-    if (index !== -1) {
-      this.completedTasks.splice(index, 1);
-      this.completedTaskNum--;
-    }
   }
 
   onTaskCompletionChange(updatedTask: Task): void {
@@ -134,19 +47,22 @@ export class HomeComponent implements OnInit {
       (task) => task.id === updatedTask.id
     );
     if (foundIndex !== -1) {
-      this.tasks[foundIndex] = updatedTask; // Update the task in the tasks array
-      if (updatedTask.completed) {
-        this.addCompletedTasks(updatedTask); // Update completedTaskNum
-        this.deleteUnCompletedTasks(updatedTask); // Remove from uncompleted tasks
-      } else {
-        this.deleteCompletedTasks(updatedTask);
-        this.addUnCompletedTasks(updatedTask); // Add back to uncompleted tasks
-      }
-      this.saveTasks(this.tasks); // Save tasks to localStorage
+      this.tasks[foundIndex] = updatedTask;
+      this.tasksService.saveTasksToLocalStorage(this.tasks);
+      this.updateTaskStats();
     }
   }
 
-  addTask(name: string, body: string) {
+  onDeleteTask(task: Task): void {
+    const index = this.tasks.findIndex((t) => t.id === task.id);
+    if (index !== -1) {
+      this.tasks.splice(index, 1);
+      this.tasksService.saveTasksToLocalStorage(this.tasks);
+      this.updateTaskStats();
+    }
+  }
+
+  addTask(name: string, body: string): void {
     const newTask: Task = {
       name,
       body,
@@ -157,17 +73,16 @@ export class HomeComponent implements OnInit {
           : 0,
     };
     this.tasks.push(newTask);
-    this.addUnCompletedTasks(newTask);
-    this.getTotalTasks();
-    this.saveTasks(this.tasks);
+    this.tasksService.saveTasksToLocalStorage(this.tasks);
+    this.updateTaskStats();
   }
 
-  ngOnInit(): void {
-    this.tasks = this.loadTasks(); // Load tasks from localStorage
-    this.getTasks();
-    this.getTotalTasks();
-    this.getCompletedTaskNum();
-    this.getCompletedTasks();
-    this.getUnCompletedTasks();
+  toggleIsAddTask(): void {
+    this.isAddTask = !this.isAddTask;
+  }
+
+  onSubmit(name: string, body: string): void {
+    this.addTask(name, body);
+    this.toggleIsAddTask();
   }
 }

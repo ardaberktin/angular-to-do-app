@@ -1,19 +1,33 @@
 <div class="home">
-  <p>{{ message }}</p>
   <div class="home-widgets">
     <div class="totTaskWidget">
       <div class="widget-title">
         <p class="task-num-title">Number of Tasks: {{ totalTaskNum }}</p>
-        <span class="material-symbols-outlined"> add </span>
+        <span class="material-symbols-outlined" (click)="toggleIsAddTask()">
+          add
+        </span>
       </div>
       <div *ngIf="isAddTask">
-        <p>hello</p>
+        <div *ngIf="isAddTask" class="add-new-task">
+          <form (submit)="onSubmit(newTaskName.value, newTaskBody.value)">
+            <div>
+              <label for="taskName">Task Name:</label>
+              <input type="text" id="taskName" #newTaskName required />
+            </div>
+            <div>
+              <label for="taskBody">Task Body:</label>
+              <textarea id="taskBody" #newTaskBody required></textarea>
+            </div>
+            <button type="submit">Add Task</button>
+          </form>
+        </div>
       </div>
       <div>
         <app-tasks
           *ngFor="let task of unCompletedTasks"
           [task]="task"
           (completedChange)="onTaskCompletionChange($event)"
+          (deleteTask)="onDeleteTask($event)"
         ></app-tasks>
       </div>
     </div>
