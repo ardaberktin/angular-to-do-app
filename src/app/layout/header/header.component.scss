@@ -1,5 +1,5 @@
 .navbar {
-  background: rgba(0, 0, 0, 0.646);
+  background: rgba(255, 255, 255, 0.028);
   backdrop-filter: blur(10px); /* Blur effect */
   -webkit-backdrop-filter: blur(10px); /* Safari support */
   height: 80px;
@@ -11,13 +11,15 @@
   top: 10px;
   z-index: 999;
   border-radius: 15px;
-  border: 4px solid rgb(0, 0, 0);
+  // border: 4px solid rgb(0, 0, 0);
   margin-left: 20px;
   margin-right: 20px;
+  box-shadow: inset;
+  box-shadow: 0px 0px 10px 10px rgba(156, 148, 148, 0.5);
 }
 
 .navbar-container {
-  color: white;
+  color: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,7 +28,7 @@
 }
 
 .navbar-logo {
-  color: white;
+  color: black;
   justify-self: start;
   margin-left: 30px;
   cursor: pointer;
@@ -66,7 +68,7 @@
 }
 
 .nav-links {
-  color: white;
+  color: black;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -78,7 +80,7 @@
 }
 
 .nav-links:hover {
-  border-bottom: 4px solid white;
+  border-bottom: 4px solid black;
   transition: all 0.2s ease-out;
 }
 
@@ -86,16 +88,16 @@
   transform: translateY(4px);
 }
 .highlight {
-  color: white;
+  color: black;
   transition: all 0.2s ease-out;
 }
 
 .about-me {
-  border: 2px solid white;
+  border: 2px solid black;
 }
 
 .fa-bars {
-  color: white;
+  color: black;
 }
 
 .nav-links-mobile {
