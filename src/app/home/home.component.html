@@ -26,8 +26,8 @@
         <app-tasks
           *ngFor="let task of unCompletedTasks"
           [task]="task"
-          (completedChange)="onTaskCompletionChange($event)"
-          (deleteTask)="onDeleteTask($event)"
+          (completedChange)="updateTask($event)"
+          (deleteTask)="deleteTask($event)"
         ></app-tasks>
       </div>
     </div>
@@ -39,7 +39,7 @@
       <app-tasks
         *ngFor="let task of completedTasks"
         [task]="task"
-        (completedChange)="onTaskCompletionChange($event)"
+        (completedChange)="updateTask($event)"
       ></app-tasks>
     </div>
   </div>

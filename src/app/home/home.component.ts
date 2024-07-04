@@ -3,11 +3,12 @@ import { TasksComponent } from '../components/tasks/tasks.component';
 import { CommonModule } from '@angular/common';
 import { Task } from '../../types';
 import { TasksService } from '../services/tasks.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [TasksComponent, CommonModule],
+  imports: [TasksComponent, CommonModule, HttpClientModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -23,14 +24,21 @@ export class HomeComponent implements OnInit {
 
   isAddTask: boolean = false;
 
-  constructor(private tasksService: TasksService) {}
+  constructor(private taskService: TasksService) {}
 
   ngOnInit(): void {
     this.loadTasks();
   }
 
+  // loadTasks(): void {
+  //   this.tasks = this.tasksService.getTasksFromLocalStorage();
+  //   this.updateTaskStats();
+  // }
+
   loadTasks(): void {
-    this.tasks = this.tasksService.getTasksFromLocalStorage();
+    this.taskService.getTasks().subscribe((tasks: Task[]) => {
+      this.tasks = tasks;
+    });
     this.updateTaskStats();
   }
 
@@ -42,27 +50,59 @@ export class HomeComponent implements OnInit {
     this.unCompletedTasksNum = this.unCompletedTasks.length;
   }
 
-  onTaskCompletionChange(updatedTask: Task): void {
-    const foundIndex = this.tasks.findIndex(
-      (task) => task.id === updatedTask.id
-    );
-    if (foundIndex !== -1) {
-      this.tasks[foundIndex] = updatedTask;
-      this.tasksService.saveTasksToLocalStorage(this.tasks);
-      this.updateTaskStats();
-    }
+  // updateTask(updatedTask: Task): void {
+  //   const foundIndex = this.tasks.findIndex(
+  //     (task) => task.id === updatedTask.id
+  //   );
+  //   if (foundIndex !== -1) {
+  //     this.tasks[foundIndex] = updatedTask;
+  //     this.tasksService.saveTasksToLocalStorage(this.tasks);
+  //     this.updateTaskStats();
+  //   }
+  // }
+
+  updateTask(task: Task): void {
+    this.taskService.updateTask(task.id, task).subscribe((updatedTask) => {
+      const index = this.tasks.findIndex((t) => t.id === updatedTask.id);
+      if (index !== -1) {
+        this.tasks[index] = updatedTask;
+        this.updateTaskStats();
+      }
+    });
   }
 
-  onDeleteTask(task: Task): void {
-    const index = this.tasks.findIndex((t) => t.id === task.id);
-    if (index !== -1) {
-      this.tasks.splice(index, 1);
-      this.tasksService.saveTasksToLocalStorage(this.tasks);
+  // deleteTask(task: Task): void {
+  //   const index = this.tasks.findIndex((t) => t.id === task.id);
+  //   if (index !== -1) {
+  //     this.tasks.splice(index, 1);
+  //     this.tasksService.saveTasksToLocalStorage(this.tasks);
+  //     this.updateTaskStats();
+  //   }
+  // }
+
+  deleteTask(task: Task): void {
+    this.taskService.deleteTask(task.id).subscribe(() => {
+      this.tasks = this.tasks.filter((t) => t.id !== task.id);
       this.updateTaskStats();
-    }
+    });
   }
 
-  addTask(name: string, body: string): void {
+  // createTask(name: string, body: string): void {
+  //   const newTask: Task = {
+  //     name,
+  //     body,
+  //     completed: false,
+  //     id:
+  //       this.tasks.length > 0
+  //         ? Math.max(...this.tasks.map((task) => task.id)) + 1
+  //         : 0,
+  //   };
+  //   this.tasks.push(newTask);
+  //   this.tasksService.saveTasksToLocalStorage(this.tasks);
+  //   this.updateTaskStats();
+  // }
+
+  createTask(name: string, body: string): void {
     const newTask: Task = {
       name,
       body,
@@ -70,11 +110,12 @@ export class HomeComponent implements OnInit {
       id:
         this.tasks.length > 0
           ? Math.max(...this.tasks.map((task) => task.id)) + 1
-          : 0,
+          : 1,
     };
-    this.tasks.push(newTask);
-    this.tasksService.saveTasksToLocalStorage(this.tasks);
-    this.updateTaskStats();
+    this.taskService.createTask(newTask).subscribe((newTask) => {
+      this.tasks.push(newTask);
+      this.updateTaskStats();
+    });
   }
 
   toggleIsAddTask(): void {
@@ -82,7 +123,7 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(name: string, body: string): void {
-    this.addTask(name, body);
+    this.createTask(name, body);
     this.toggleIsAddTask();
   }
 }

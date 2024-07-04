@@ -1,20 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Task } from '../../types';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Task } from '../../types'; // Define TaskItem interface or model
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  private localStorageKey: string = 'tasks';
+  private apiUrl = 'https://localhost:5241/api/tasks/'; // Replace with your backend API URL
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
-  getTasksFromLocalStorage(): Task[] {
-    const tasksJson = localStorage.getItem(this.localStorageKey);
-    return tasksJson ? JSON.parse(tasksJson) : [];
+  getTasks(): Observable<Task[]> {
+    return this.httpClient.get<Task[]>(this.apiUrl) as Observable<Task[]>;
   }
 
-  saveTasksToLocalStorage(tasks: Task[]): void {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(tasks));
+  createTask(task: Task): Observable<Task> {
+    return this.httpClient.post<Task>(this.apiUrl, task);
+  }
+
+  updateTask(id: number, task: Task): Observable<Task> {
+    return this.httpClient.put<Task>(`${this.apiUrl}/${id}`, task);
+  }
+
+  deleteTask(id: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.apiUrl}/${id}`);
   }
 }
