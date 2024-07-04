@@ -7,7 +7,7 @@ import { Task } from '../../types'; // Define TaskItem interface or model
   providedIn: 'root',
 })
 export class TasksService {
-  private apiUrl = 'https://localhost:5241/api/tasks/'; // Replace with your backend API URL
+  private apiUrl = 'http://localhost:5241/api/tasks/'; // Replace with your backend API URL
 
   constructor(private httpClient: HttpClient) {}
 
