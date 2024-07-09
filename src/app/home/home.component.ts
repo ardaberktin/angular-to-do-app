@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   isAddTask: boolean = false;
 
   constructor(
+    // Injects
     private taskService: TasksService,
     private sharedTasksService: SharedTasksService // Inject the shared service
   ) {}
@@ -71,9 +72,25 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  // deleteTask(task: Task): void {
+  //   this.taskService.deleteTask(task.id).subscribe(() => {
+  //     this.tasks = this.tasks.filter((t) => t.id !== task.id);
+  //     this.sharedTasksService.setTasks(this.tasks); // Update the shared service
+  //   });
+  // }
+
   deleteTask(task: Task): void {
+    if (task.isCompleted) {
+      this.completedTasks = this.completedTasks.filter((t) => t.id !== task.id);
+    } else {
+      this.unCompletedTasks = this.unCompletedTasks.filter(
+        (t) => t.id !== task.id
+      );
+    }
+
+    this.tasks = this.tasks.filter((t) => t.id !== task.id);
+
     this.taskService.deleteTask(task.id).subscribe(() => {
-      this.tasks = this.tasks.filter((t) => t.id !== task.id);
       this.sharedTasksService.setTasks(this.tasks); // Update the shared service
     });
   }
