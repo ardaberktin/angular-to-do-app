@@ -1,46 +1,5 @@
 <div class="home">
-  <div class="home-widgets">
-    <div class="totTaskWidget">
-      <div class="widget-title">
-        <p class="task-num-title">To-Do Tasks: {{ unCompletedTasksNum }}</p>
-        <span class="material-symbols-outlined" (click)="toggleIsAddTask()">
-          add
-        </span>
-      </div>
-      <div *ngIf="isAddTask">
-        <div *ngIf="isAddTask" class="add-new-task">
-          <form (submit)="onSubmit(newTaskName.value, newTaskBody.value)">
-            <div>
-              <label for="taskName">Task Name:</label>
-              <input type="text" id="taskName" #newTaskName required />
-            </div>
-            <div>
-              <label for="taskBody">Task Body:</label>
-              <textarea id="taskBody" #newTaskBody required></textarea>
-            </div>
-            <button type="submit">Add Task</button>
-          </form>
-        </div>
-      </div>
-      <div>
-        <app-tasks
-          *ngFor="let task of unCompletedTasks"
-          [task]="task"
-          (completedChange)="updateTask($event)"
-          (deleteTask)="deleteTask($event)"
-        ></app-tasks>
-      </div>
-    </div>
-
-    <div class="totTaskWidget completed">
-      <div class="widget-title">
-        <p class="task-num-title">Completed Tasks: {{ completedTaskNum }}</p>
-      </div>
-      <app-tasks
-        *ngFor="let task of completedTasks"
-        [task]="task"
-        (completedChange)="updateTask($event)"
-      ></app-tasks>
-    </div>
+  <div class="card flex justify-content-center">
+    <!-- <p-chart type="pie" [data]="data" [options]="options" /> -->
   </div>
 </div>
