@@ -1,8 +1,12 @@
 .footer {
-  position: absolute;
+  position: sticky;
+  display: flex;
   bottom: 0;
+  height: 40px;
   width: 100%;
   background-color: gray;
   color: white;
   text-align: center;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,21 +1,26 @@
 .navbar {
-  background: rgba(255, 255, 255, 0.028);
+  /* background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%); */
+  background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px); /* Blur effect */
   -webkit-backdrop-filter: blur(10px); /* Safari support */
-  height: 80px;
+  height: 70px;
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: center;
   font-size: 1.2rem;
   position: sticky;
-  top: 10px;
-  z-index: 999;
-  border-radius: 15px;
-  // border: 4px solid rgb(0, 0, 0);
+  top: 15px;
+  left: 0;
+  right: 0;
   margin-left: 20px;
   margin-right: 20px;
+  margin-bottom: 10px;
+  z-index: 999;
+  border-radius: 20px;
   box-shadow: inset;
-  box-shadow: 0px 0px 10px 10px rgba(156, 148, 148, 0.5);
+  box-shadow: 0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f,
+    0 3px 3px -1.5px #0000000f, 0 6px 6px -3px #0000000f,
+    0 12px 12px -6px #0000000f, 0 24px 24px -12px #0000000f;
 }
 
 .navbar-container {

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Task } from '../../types';
 import { TasksService } from '../services/tasks.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { SharedTasksService } from '../services/shared-tasks.service'; //
 
 @Component({
   selector: 'app-home',
@@ -24,99 +25,72 @@ export class HomeComponent implements OnInit {
 
   isAddTask: boolean = false;
 
-  constructor(private taskService: TasksService) {}
+  constructor(
+    private taskService: TasksService,
+    private sharedTasksService: SharedTasksService // Inject the shared service
+  ) {}
 
   ngOnInit(): void {
     this.loadTasks();
+    this.updateTaskStats();
   }
 
-  // loadTasks(): void {
-  //   this.tasks = this.tasksService.getTasksFromLocalStorage();
-  //   this.updateTaskStats();
-  // }
-
   loadTasks(): void {
-    this.taskService.getTasks().subscribe((newtasks: Task[]) => {
-      console.log(newtasks, 'new');
-      this.tasks = newtasks;
-      this.updateTaskStats();
+    this.taskService.getTasks().subscribe((newTasks: Task[]) => {
+      this.tasks = newTasks;
+      this.sharedTasksService.setTasks(this.tasks); // Update the shared service
     });
   }
 
-  updateTaskStats(): void {
-    console.log(this.tasks, 'update');
-    this.totalTaskNum = this.tasks.length;
-    this.completedTasks = this.tasks.filter((task) => task.isCompleted);
-    this.unCompletedTasks = this.tasks.filter((task) => !task.isCompleted);
-    this.completedTaskNum = this.completedTasks.length;
-    this.unCompletedTasksNum = this.unCompletedTasks.length;
+  updateTaskStats() {
+    this.sharedTasksService.tasks$.subscribe((tasks) => (this.tasks = tasks));
+    this.sharedTasksService.completedTasks$.subscribe(
+      (completedTasks) => (this.completedTasks = completedTasks)
+    );
+    this.sharedTasksService.unCompletedTasks$.subscribe(
+      (unCompletedTasks) => (this.unCompletedTasks = unCompletedTasks)
+    );
+    this.sharedTasksService.totalTaskNum$.subscribe(
+      (totalTaskNum) => (this.totalTaskNum = totalTaskNum)
+    );
+    this.sharedTasksService.completedTaskNum$.subscribe(
+      (completedTaskNum) => (this.completedTaskNum = completedTaskNum)
+    );
+    this.sharedTasksService.unCompletedTasksNum$.subscribe(
+      (unCompletedTasksNum) => (this.unCompletedTasksNum = unCompletedTasksNum)
+    );
   }
-
-  // updateTask(updatedTask: Task): void {
-  //   const foundIndex = this.tasks.findIndex(
-  //     (task) => task.id === updatedTask.id
-  //   );
-  //   if (foundIndex !== -1) {
-  //     this.tasks[foundIndex] = updatedTask;
-  //     this.tasksService.saveTasksToLocalStorage(this.tasks);
-  //     this.updateTaskStats();
-  //   }
-  // }
 
   updateTask(task: Task): void {
     this.taskService.updateTask(task.id, task).subscribe((updatedTask) => {
       const index = this.tasks.findIndex((t) => t.id === updatedTask.id);
       if (index !== -1) {
         this.tasks[index] = updatedTask;
-        this.updateTaskStats();
+        this.sharedTasksService.setTasks(this.tasks); // Update the shared service
       }
     });
   }
 
-  // deleteTask(task: Task): void {
-  //   const index = this.tasks.findIndex((t) => t.id === task.id);
-  //   if (index !== -1) {
-  //     this.tasks.splice(index, 1);
-  //     this.tasksService.saveTasksToLocalStorage(this.tasks);
-  //     this.updateTaskStats();
-  //   }
-  // }
-
   deleteTask(task: Task): void {
     this.taskService.deleteTask(task.id).subscribe(() => {
       this.tasks = this.tasks.filter((t) => t.id !== task.id);
-      this.updateTaskStats();
+      this.sharedTasksService.setTasks(this.tasks); // Update the shared service
     });
   }
 
-  // createTask(name: string, body: string): void {
-  //   const newTask: Task = {
-  //     name,
-  //     body,
-  //     completed: false,
-  //     id:
-  //       this.tasks.length > 0
-  //         ? Math.max(...this.tasks.map((task) => task.id)) + 1
-  //         : 0,
-  //   };
-  //   this.tasks.push(newTask);
-  //   this.tasksService.saveTasksToLocalStorage(this.tasks);
-  //   this.updateTaskStats();
-  // }
-
   createTask(title: string, description: string): void {
+    const newIDNum3 = Math.floor(Math.random() * (9999999 - 1 + 1) + 1);
+
     const newTask: Task = {
+      id: newIDNum3,
       title,
       description,
       isCompleted: false,
-      id:
-        this.tasks.length > 0
-          ? Math.max(...this.tasks.map((task) => task.id)) + 1
-          : 1,
     };
-    this.taskService.createTask(newTask).subscribe((newTask) => {
-      this.tasks.push(newTask);
-      this.updateTaskStats();
+
+    this.taskService.createTask(newTask).subscribe((createdTask) => {
+      this.tasks.push(createdTask);
+      this.sharedTasksService.setTasks(this.tasks); // Update the shared service
     });
   }
 
