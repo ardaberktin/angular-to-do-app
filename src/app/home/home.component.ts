@@ -72,28 +72,28 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  // deleteTask(task: Task): void {
-  //   this.taskService.deleteTask(task.id).subscribe(() => {
-  //     this.tasks = this.tasks.filter((t) => t.id !== task.id);
-  //     this.sharedTasksService.setTasks(this.tasks); // Update the shared service
-  //   });
-  // }
-
   deleteTask(task: Task): void {
-    if (task.isCompleted) {
-      this.completedTasks = this.completedTasks.filter((t) => t.id !== task.id);
-    } else {
-      this.unCompletedTasks = this.unCompletedTasks.filter(
-        (t) => t.id !== task.id
-      );
-    }
-
-    this.tasks = this.tasks.filter((t) => t.id !== task.id);
-
     this.taskService.deleteTask(task.id).subscribe(() => {
+      this.tasks = this.tasks.filter((t) => t.id !== task.id);
       this.sharedTasksService.setTasks(this.tasks); // Update the shared service
     });
   }
+
+  // deleteTask(task: Task): void {
+  //   if (task.isCompleted) {
+  //     this.completedTasks = this.completedTasks.filter((t) => t.id !== task.id);
+  //   } else {
+  //     this.unCompletedTasks = this.unCompletedTasks.filter(
+  //       (t) => t.id !== task.id
+  //     );
+  //   }
+
+  //   this.tasks = this.tasks.filter((t) => t.id !== task.id);
+
+  //   this.taskService.deleteTask(task.id).subscribe(() => {
+  //     this.sharedTasksService.setTasks(this.tasks); // Update the shared service
+  //   });
+  // }
 
   createTask(title: string, description: string): void {
     const newIDNum3 = Math.floor(Math.random() * (9999999 - 1 + 1) + 1);
