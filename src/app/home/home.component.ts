@@ -3,7 +3,7 @@ import { TasksComponent } from '../components/tasks/tasks.component';
 import { CommonModule } from '@angular/common';
 import { Task } from '../../types';
 import { TasksService } from '../services/tasks.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit {
       const index = this.tasks.findIndex((t) => t.id === updatedTask.id);
       if (index !== -1) {
         this.tasks[index] = updatedTask;
+        console.log(this.tasks[index], 'update task');
         this.updateTaskStats();
       }
     });
@@ -83,8 +84,10 @@ export class HomeComponent implements OnInit {
   // }
 
   deleteTask(task: Task): void {
+    console.log(this.tasks, 'delete task0');
     this.taskService.deleteTask(task.id).subscribe(() => {
       this.tasks = this.tasks.filter((t) => t.id !== task.id);
+      console.log(this.tasks, 'delete task');
       this.updateTaskStats();
     });
   }
@@ -105,17 +108,22 @@ export class HomeComponent implements OnInit {
   // }
 
   createTask(title: string, description: string): void {
+    const newIDNum3 = Math.floor(Math.random() * (9999999 - 1 + 1) + 1); // random ID
+    console.log(newIDNum3, 'newIDNum3');
+
     const newTask: Task = {
+      id: newIDNum3,
       title,
       description,
       isCompleted: false,
-      id:
-        this.tasks.length > 0
-          ? Math.max(...this.tasks.map((task) => task.id)) + 1
-          : 1,
     };
-    this.taskService.createTask(newTask).subscribe((newTask) => {
-      this.tasks.push(newTask);
+
+    // this.tasks.length > 0
+    //   ? Math.max(...this.tasks.map((task) => task.id)) + 1
+    //   : 1,
+
+    this.taskService.createTask(newTask).subscribe((createdTask) => {
+      this.tasks.push(createdTask);
       this.updateTaskStats();
     });
   }

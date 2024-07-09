@@ -20,10 +20,10 @@ export class TasksService {
   }
 
   updateTask(id: number, task: Task): Observable<Task> {
-    return this.httpClient.put<Task>(`${this.apiUrl}/${id}`, task);
+    return this.httpClient.put<Task>(`${this.apiUrl}${id}`, task);
   }
 
   deleteTask(id: number): Observable<any> {
-    return this.httpClient.delete<any>(`${this.apiUrl}/${id}`);
+    return this.httpClient.delete<any>(`${this.apiUrl}${id}`);
   }
 }
