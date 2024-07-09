@@ -11,9 +11,9 @@ export interface Tasks {
 // types.ts (or wherever your Task model is defined)
 export interface Task {
   id: number; // Unique identifier
-  title: string;
-  description: string;
-  isCompleted: boolean;
+  name: string;
+  body: string;
+  completed: boolean;
 }
 
 export interface Options {

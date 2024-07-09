@@ -4,9 +4,9 @@
       <mat-checkbox
         class="task-checkbox"
         color="primary"
-        [checked]="task.isCompleted"
+        [checked]="task.completed"
         (change)="toggleCompletion()"
-        >{{ task.title }}</mat-checkbox
+        >{{ task.name }}</mat-checkbox
       >
 
       <span class="material-symbols-outlined" (click)="deleteThisTask()">
@@ -14,5 +14,5 @@
       </span>
     </div>
   </div>
-  <p class="task-body">{{ task.description }}</p>
+  <p class="task-body">{{ task.body }}</p>
 </div>

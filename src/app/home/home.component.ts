@@ -36,18 +36,16 @@ export class HomeComponent implements OnInit {
   // }
 
   loadTasks(): void {
-    this.taskService.getTasks().subscribe((newtasks: Task[]) => {
-      console.log(newtasks, 'new');
-      this.tasks = newtasks;
-      this.updateTaskStats();
+    this.taskService.getTasks().subscribe((tasks: Task[]) => {
+      this.tasks = tasks;
     });
+    this.updateTaskStats();
   }
 
   updateTaskStats(): void {
-    console.log(this.tasks, 'update');
     this.totalTaskNum = this.tasks.length;
-    this.completedTasks = this.tasks.filter((task) => task.isCompleted);
-    this.unCompletedTasks = this.tasks.filter((task) => !task.isCompleted);
+    this.completedTasks = this.tasks.filter((task) => task.completed);
+    this.unCompletedTasks = this.tasks.filter((task) => !task.completed);
     this.completedTaskNum = this.completedTasks.length;
     this.unCompletedTasksNum = this.unCompletedTasks.length;
   }
@@ -104,11 +102,11 @@ export class HomeComponent implements OnInit {
   //   this.updateTaskStats();
   // }
 
-  createTask(title: string, description: string): void {
+  createTask(name: string, body: string): void {
     const newTask: Task = {
-      title,
-      description,
-      isCompleted: false,
+      name,
+      body,
+      completed: false,
       id:
         this.tasks.length > 0
           ? Math.max(...this.tasks.map((task) => task.id)) + 1
