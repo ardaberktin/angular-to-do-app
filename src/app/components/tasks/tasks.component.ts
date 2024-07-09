@@ -18,7 +18,7 @@ export class TasksComponent {
   @Output() deleteTask = new EventEmitter<Task>(); // Emit Task object for deletion
 
   toggleCompletion(): void {
-    this.task.completed = !this.task.completed;
+    this.task.isCompleted = !this.task.isCompleted;
     this.completedChange.emit(this.task); // Emit the updated task
   }
 
