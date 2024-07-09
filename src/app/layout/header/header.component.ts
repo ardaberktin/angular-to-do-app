@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HomeComponent } from '../../home/home.component';
-import { TasksPageComponent } from '../../tasks/tasks.component';
+import { TasksComponent } from '../../tasks/tasks.component';
 import { ProfileComponent } from '../../profile/profile.component';
 import { AboutComponent } from '../../about/about.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
@@ -10,7 +10,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [
     HomeComponent,
-    TasksPageComponent,
+    TasksComponent,
     ProfileComponent,
     AboutComponent,
     RouterOutlet,
