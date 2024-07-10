@@ -94,7 +94,7 @@ export class TasksComponent implements OnInit {
           color: '#ffffff',
           font: {
             weight: 'bold',
-            size: 16,
+            size: 20,
           },
           formatter: (value: number) => {
             return value;

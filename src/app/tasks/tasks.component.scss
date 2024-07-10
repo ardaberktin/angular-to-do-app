@@ -9,6 +9,7 @@
     border-radius: 20px;
     box-shadow: inset;
     box-shadow: 0 0 30px 10px rgba(156, 148, 148, 0.5);
+    text-align: center;
   }
 
   .chart-container {
@@ -16,7 +17,7 @@
     justify-content: center;
     align-items: center;
     width: 100%; // Adjust as needed
-    height: 400px; // Adjust as needed
+    height: auto; // Adjust as needed
     max-width: 600px; // Adjust as needed
     margin: 0 auto; // Center the chart
     padding: 20px; // Add padding if needed
