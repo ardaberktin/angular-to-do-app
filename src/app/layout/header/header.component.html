@@ -1,21 +1,21 @@
 <nav class="navbar">
   <div class="navbar-container">
     <div class="navbar-logo">
-      <a class="nav-links" routerLink="/">Arda Tasks</a>
+      <a class="nav-links" [routerLink]="'/'">Arda Tasks</a>
     </div>
     <div class="menu-icon"></div>
-    <ul class="nav-menu active">
-      <li class="nav-item">
-        <a class="nav-links" routerLink="/">Home</a>
+    <ul class="nav-menu">
+      <li class="nav-item" [class.active]="isActive('/')">
+        <a class="nav-links" [routerLink]="'/'">Tasks</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-links" routerLink="/tasks">Task Summary</a>
+      <li class="nav-item" [class.active]="isActive('/tasks')">
+        <a class="nav-links" [routerLink]="'/tasks'">Summary</a>
       </li>
-      <!-- <li class="nav-item">
-        <a class="nav-links" routerLink="/profile">Profile</a>
+      <!-- <li class="nav-item" [class.active]="isActive('/profile')">
+        <a class="nav-links" [routerLink]="'/profile'">Profile</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-links" routerLink="/about">About</a>
+      <li class="nav-item" [class.active]="isActive('/about')">
+        <a class="nav-links" [routerLink]="'/about'">About</a>
       </li> -->
     </ul>
   </div>
