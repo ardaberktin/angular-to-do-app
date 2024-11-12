@@ -3,7 +3,7 @@ import { TasksComponent } from '../components/tasks/tasks.component';
 import { CommonModule } from '@angular/common';
 import { Task } from '../../types';
 import { TasksService } from '../services/tasks.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { SharedTasksService } from '../services/shared-tasks.service'; //
 
 @Component({
